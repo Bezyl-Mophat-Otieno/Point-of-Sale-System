@@ -1,0 +1,52 @@
+{% extends 'base.html'%} {% block content%}
+
+{%if messages %} 
+{%for message in messages %}
+<div class="mt-5 alert alert-success alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="close">
+    x
+  </button>
+</div>
+
+{% endfor %} 
+{%endif%}
+<br />
+<table class="table table-striped">
+  <h3 class="text-success w-100 text-center text-decoration-underline mt-5">
+       CUSTOMER RECORDS
+  </h3>
+  <thead>
+    <th scope="col"></th>
+    <th scope="col">Customer Name</th>
+    <th scope="col">Phone Number</th>
+    <th scope="col">Location</th>
+  </thead>
+  <tbody>
+    {% for customer in customers %}
+    <tr>
+      <th scope="row">{{customer.id}}</th>
+      <td>{{customer.name}}</td>
+      <td>{{customer.phone}}</td>
+      <td>{{customer.location}}</td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <a
+            href="{% url 'stockManager:updateCustomer' customer.id %}"
+            type="button"
+            class="btn btn-outline-secondary "
+            >Update
+          </a>
+          <a
+            href="{% url 'stockManager:deleteCustomer' customer.id %}"
+            type="button"
+            class="btn btn-outline-danger "
+            >Delete</a
+          >
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

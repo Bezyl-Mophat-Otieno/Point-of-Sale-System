@@ -134,16 +134,16 @@ def deleteOrder (request , orderId):
 def addSalesForm (request):
     if request.method == 'POST':
         submitted = False
-        form =SalesAddForm(request.POST)
+        form =SaleAddForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request,'Order Placed Successfully')
+            messages.success(request,'Sales  Recorded Successfully')
             return HttpResponseRedirect('/stock/allSales?submitted=True')
         
         
 
     else:
-        form=SalesAddForm()
+        form=SaleAddForm()
         submitted=False
         if 'submitted' in request.GET:
             submitted=True

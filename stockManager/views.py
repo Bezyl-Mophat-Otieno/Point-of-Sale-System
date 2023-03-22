@@ -114,6 +114,14 @@ def allOrders(request):
     return render(request,'stockManager/allOrders.html',{'orders':orders})
 
 
+def pendingOrders(request):
+    orders = Order.objects.filter(status='pending')
+    return render(request,'stockManager/allOrders.html',{'orders':orders})
+
+def fulfilledOrders(request):
+    orders = Order.objects.filter(status='fulfilled')
+    return render(request,'stockManager/allOrders.html',{'orders':orders})
+
 def updateOrders(request,orderId):
     order = Order.objects.get( pk=orderId)
     form = OrderAddForm(request.POST or None,instance=order)

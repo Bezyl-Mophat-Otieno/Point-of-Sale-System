@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render
+from django.db.models import F , Sum
 from stockManager.models import Product , Customer , Order , Sale
 # Create your views here.
 from django.http import HttpResponseRedirect
@@ -19,6 +20,15 @@ def index(request):
     products = productList.count()
     customerList  = Customer.objects.all();
     customers = customerList.count()
+    # Calculatiing the revenue accrued by the sales 
+    revenue = Sale.objects.aggregate(total=Sum(F('selling_price')*F('pieces')))['total']
+    # render top sales in the home page 
 
-    context = { 'pending':pendingOrders , 'fulfilled':fulfilledOrders, 'sales':sales , 'products':products , 'customers':customers ,'saleList':saleList }
+    topSales = Sale.objects.filter(pieces__gte=10).order_by('-pieces')[:5]
+
+    
+
+    
+
+    context = { 'pending':pendingOrders , 'fulfilled':fulfilledOrders, 'sales':sales , 'products':products , 'customers':customers ,'saleList':saleList , 'revenue':revenue , 'topSales':topSales }
     return render(request, 'home/home.html',context)

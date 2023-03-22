@@ -19,6 +19,9 @@ path('addOrder/',views.addOrdersForm,name='addOrder'),
 path('allOrders/',views.allOrders,name='allOrders'),
 path('updateOrder/<int:orderId>',views.updateOrders,name='updateOrder'),
 path('deleteOrder/<int:orderId>',views.deleteOrder,name='deleteOrder'),
+path('pendingOrders/',views.pendingOrders,name='pendingOrders'),
+path('fulfilledOrders/',views.fulfilledOrders,name='fulfilledOrders'),
+
 
 
 path('addSale/',views.addSalesForm,name='addSale'),

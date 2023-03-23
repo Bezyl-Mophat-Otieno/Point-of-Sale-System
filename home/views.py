@@ -23,12 +23,13 @@ def index(request):
     # Calculatiing the revenue accrued by the sales 
     revenue = Sale.objects.aggregate(total=Sum(F('selling_price')*F('pieces')))['total']
     # render top sales in the home page 
-
     topSales = Sale.objects.filter(pieces__gte=10).order_by('-pieces')[:5]
+    #render the list of products that we currently have in stock 
+    products = Product.objects.all().count()
 
     
 
     
 
-    context = { 'pending':pendingOrders , 'fulfilled':fulfilledOrders, 'sales':sales , 'products':products , 'customers':customers ,'saleList':saleList , 'revenue':revenue , 'topSales':topSales }
+    context = { 'pending':pendingOrders , 'fulfilled':fulfilledOrders, 'sales':sales , 'products':products , 'customers':customers ,'saleList':saleList , 'revenue':revenue , 'topSales':topSales , 'products':products }
     return render(request, 'home/home.html',context)

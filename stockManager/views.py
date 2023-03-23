@@ -1,12 +1,16 @@
 from django.shortcuts import render,redirect
-from .forms import ProductAddForm,CustomerAddForm,OrderAddForm,SaleAddForm
+from .forms import ProductAddForm,CustomerAddForm,OrderAddForm,SaleAddForm,userRegisterForm
 from django.http import HttpResponseRedirect
 from .models import Product,Customer,Order,Sale
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 # Controller logic for a product 
-
+@login_required(login_url='/')
 def addProductForm (request):
     if request.method == 'POST':
         submitted = False
@@ -24,11 +28,13 @@ def addProductForm (request):
         if 'submitted' in request.GET:
             submitted=True
     return render(request,'stockManager/addProduct.html',{'form':form,'submitted':submitted})
-
+@login_required(login_url='/')
 def allProducts(request):
     products = Product.objects.all()
     return render(request,'stockManager/allProducts.html',{'products':products})
 
+
+@login_required(login_url='/')
 def updateProducts(request,productId):
     product = Product.objects.get( pk=productId)
     form = ProductAddForm(request.POST or None,instance=product)
@@ -39,6 +45,8 @@ def updateProducts(request,productId):
 
     return render(request , 'stockManager/productUpdate.html',{'product':product,'form':form})
 
+
+@login_required(login_url='/')
 def deleteProduct (request , productId):
     product = Product.objects.get(pk=productId)
     product.delete()
@@ -46,6 +54,7 @@ def deleteProduct (request , productId):
     
 # Controller logics for a customer 
 
+@login_required(login_url='/')
 def addCustomerForm (request):
     if request.method == 'POST':
         submitted = False
@@ -66,11 +75,14 @@ def addCustomerForm (request):
 
 
 
+@login_required(login_url='/')
 def allCustomers(request):
     customers = Customer.objects.all()
     return render(request,'stockManager/allCustomers.html',{'customers':customers})
 
 
+
+@login_required(login_url='/')
 def updateCustomers(request,customerId):
     customer = Customer.objects.get( pk=customerId)
     form = CustomerAddForm(request.POST or None,instance=customer)
@@ -86,9 +98,10 @@ def deleteCustomer (request , customerId):
     customer.delete()
     return redirect ('/stock/allCustomers')
     
+
+
 # controller logics for the order model
-
-
+@login_required(login_url='/')
 def addOrdersForm (request):
     if request.method == 'POST':
         submitted = False
@@ -108,20 +121,25 @@ def addOrdersForm (request):
     return render(request,'stockManager/addOrders.html',{'form':form,'submitted':submitted})
 
 
-
+@login_required(login_url='/')
 def allOrders(request):
     orders = Order.objects.all()
     return render(request,'stockManager/allOrders.html',{'orders':orders})
 
 
+@login_required(login_url='/')
 def pendingOrders(request):
     orders = Order.objects.filter(status='pending')
     return render(request,'stockManager/allOrders.html',{'orders':orders})
 
+
+@login_required(login_url='/')
 def fulfilledOrders(request):
     orders = Order.objects.filter(status='fulfilled')
     return render(request,'stockManager/allOrders.html',{'orders':orders})
 
+
+@login_required(login_url='/')
 def updateOrders(request,orderId):
     order = Order.objects.get( pk=orderId)
     form = OrderAddForm(request.POST or None,instance=order)
@@ -132,13 +150,16 @@ def updateOrders(request,orderId):
 
     return render(request , 'stockManager/orderUpdate.html',{'order':order,'form':form})
 
+
+@login_required(login_url='/')
 def deleteOrder (request , orderId):
     order = Order.objects.get(pk=orderId)
     order.delete()
     return redirect ('/stock/allOrders')
 
-# controller logic for the sales controller
 
+@login_required(login_url='/')
+# controller logic for the sales controller
 def addSalesForm (request):
     if request.method == 'POST':
         submitted = False
@@ -159,11 +180,50 @@ def addSalesForm (request):
 
 
 
+@login_required(login_url='/')
 def allSales(request):
     sales = Sale.objects.all()
     return render(request,'stockManager/allSales.html',{'sales':sales})
 
 
+
+
+#contains logic for authentication
+def loginPage (request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request,'Log-In Successful')
+            return redirect('/home/dashboard')
+        else:
+            print('hello')
+            messages.info(request,'Username or Password is incorrect')
+        
+    context = {}    
+    return render(request,'stockManager/login.html' , context)
+
+
+#logout logic
+def logoutUser (request):
+    logout(request)
+    messages.success(request,'Log-Out Successful')
+    return redirect('/')
+
+
+def register (request):
+    form = userRegisterForm()
+    if request.method == 'POST':
+        form = userRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request,'Account Created Successfully For ' + user )
+            return redirect('/stock/login')
+
+    return render(request,'stockManager/register.html' , {'form':form})
 # def updateSales(request,saleId):
 #     sale = Order.objects.get( pk=saleId)
 #     form = SalesAddForm(request.POST or None,instance=sale)

@@ -2,11 +2,11 @@
 {% block content %}
 
 <form class="mt-5" action="" method="POST">
-  <h5 class="text-success  w-bold text-start"> ORDER REGISTRATION </h5>
+  <h5 class="text-decoration-underline form-header  w-bold text-start"> Sales Record </h5>
   <hr>
   {% csrf_token %}
   <div class="form-group">
    {{form}}
-  <button type="submit" class="btn btn-success ">Add</button>
+  <button type="submit" class="btn btn-primary ">Add Sale</button>
 </form>
 {% endblock %}

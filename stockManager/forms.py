@@ -1,6 +1,9 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Product, Customer,Order,Sale
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
 
 
 
@@ -62,3 +65,16 @@ class SaleAddForm(ModelForm):
             'pieces':forms.NumberInput(attrs={'class':'form-control'}),
             'selling_price':forms.TextInput(attrs={'class':'form-control'}),
         }
+
+class userRegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields =['email','username','password1','password2',]
+
+
+        # widgets = {
+        #     'email':forms.Select(attrs={'class':'form-control'}),
+        #     'username':forms.Select(attrs={'class':'form-control'}),
+        #     'password1':forms.NumberInput(attrs={'class':'form-control'}),
+        #     'password2':forms.Select(attrs={'class':'form-control'}),
+        # }

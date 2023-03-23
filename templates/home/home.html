@@ -284,12 +284,12 @@
               data-bs-toggle="dropdown"
             >
               <img
-                src="{% static 'assets/img/profile-img.jpg'%}"
+                src="{% static 'assets/img/burst.jpeg'%}"
                 alt="Profile"
                 class="rounded-circle"
               />
               <span class="d-none d-md-block dropdown-toggle ps-2"
-                >K. Anderson</span
+                >Welcome, {{user.username}} </span
               > </a
             ><!-- End Profile Iamge Icon -->
 
@@ -297,8 +297,8 @@
               class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
             >
               <li class="dropdown-header">
-                <h6>Kevin Anderson</h6>
-                <span>Web Designer</span>
+                <h6>Chief Executive Officer </h6>
+                <span>{{user.username}}</span>
               </li>
               <li>
                 <hr class="dropdown-divider" />
@@ -344,7 +344,7 @@
               </li>
 
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="#">
+                <a class="dropdown-item d-flex align-items-center" href="{%url 'stockManager:logout' %}">
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Sign Out</span>
                 </a>
@@ -405,7 +405,7 @@
             data-bs-toggle="collapse"
             href="#"
           >
-            <i class="bi bi-menu-button-wide"></i><span>Customers</span
+            <i class="bi bi-people-fill"></i><span>Customers</span
             ><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul
@@ -434,7 +434,7 @@
             data-bs-toggle="collapse"
             href="#"
           >
-            <i class="bi bi-menu-button-wide"></i><span>Orders</span
+            <i class="bi bi-archive-fill"></i><span>Orders</span
             ><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul
@@ -464,7 +464,7 @@
             data-bs-toggle="collapse"
             href="#"
           >
-            <i class="bi bi-menu-button-wide"></i><span>Sales</span
+            <i class="bi bi-receipt"></i><span>Sales</span
             ><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul
@@ -490,7 +490,7 @@
 
         <!-- End Components Nav -->
 
-        <li class="nav-item">
+        {% comment %} <li class="nav-item">
           <a
             class="nav-link collapsed"
             data-bs-target="#forms-nav"
@@ -623,7 +623,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> {% endcomment %}
         <!-- End Icons Nav -->
 
         <li class="nav-heading">Pages</li>
@@ -636,13 +636,13 @@
         </li>
         <!-- End Profile Page Nav -->
 
-        <li class="nav-item">
+        {% comment %} <li class="nav-item">
           <a class="nav-link collapsed" href="pages-faq.html">
             <i class="bi bi-question-circle"></i>
             <span>F.A.Q</span>
           </a>
         </li>
-        <!-- End F.A.Q Page Nav -->
+        <!-- End F.A.Q Page Nav --> {% endcomment %}
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="pages-contact.html">
@@ -653,7 +653,7 @@
         <!-- End Contact Page Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-register.html">
+          <a class="nav-link collapsed" href="{% url 'stockManager:register'%}">
             <i class="bi bi-card-list"></i>
             <span>Register</span>
           </a>
@@ -661,27 +661,27 @@
         <!-- End Register Page Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="pages-login.html">
-            <i class="bi bi-box-arrow-in-right"></i>
-            <span>Login</span>
+          <a class="nav-link collapsed" href="{% url 'stockManager:logout' %}">
+            <i class="bi bi-power"></i>
+            <span>Log-Out</span>
           </a>
         </li>
         <!-- End Login Page Nav -->
 
-        <li class="nav-item">
+        {% comment %} <li class="nav-item">
           <a class="nav-link collapsed" href="pages-error-404.html">
             <i class="bi bi-dash-circle"></i>
             <span>Error 404</span>
           </a>
-        </li>
+        </li> {% endcomment %}
         <!-- End Error 404 Page Nav -->
 
-        <li class="nav-item">
+        {% comment %} <li class="nav-item">
           <a class="nav-link collapsed" href="pages-blank.html">
             <i class="bi bi-file-earmark"></i>
             <span>Blank</span>
           </a>
-        </li>
+        </li> {% endcomment %}
         <!-- End Blank Page Nav -->
       </ul>
     </aside>
@@ -698,12 +698,60 @@
         </nav>
       </div>
       <!-- End Page Title -->
+      {%if messages %} 
+      {%for message in messages %}
+      <div class="mt-5 alert alert-success text-center fw-bold alert-dismissible fade show" role="alert">
+        {{message}}
+      </div>
+      
+      {% endfor %} 
+      {%endif%}
 
       <section class="section dashboard">
         <div class="row">
           <!-- Left side columns -->
           <div class="col-lg-12">
             <div class="row">
+
+            <!--products card-->
+              <div class="col-xxl-4 col-md-6">
+                <div class="card info-card sales-card">
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"
+                      ><i class="bi bi-three-dots"></i
+                    ></a>
+                    <ul
+                      class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
+                    >
+                      <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="#">Today</a></li>
+                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                    </ul>
+                  </div>
+
+                  <a href="{% url 'stockManager:allProducts' %}" class="card-body">
+                    <h5 class="card-title">Products <span>| Today</span></h5>
+
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                      >
+                        <i class="bi bi-bag-heart-fill"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>{{products}}</h6>
+                        <span class="text-success small pt-1 fw-bold">12%</span>
+                        <span class="text-muted small pt-2 ps-1">increase</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
               <!-- Sales Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card sales-card">
@@ -866,7 +914,7 @@
                             <!-- End Orders Card -->
 
               <!-- Customers Card -->
-              <div class="col-xxl-4 col-xl-12">
+              <div class="col-xxl-4 col-md-6">
                 <div class="card info-card customers-card">
                   <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"

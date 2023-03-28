@@ -13,6 +13,12 @@
   <h5 class="form-header  w-100 text-start text-decoration-underline mt-5">
     OUR PRODUCTS
 </h5>
+<nav aria-label="breadcrumb ">
+  <ol class="breadcrumb mt-0 mb-5">
+    <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'home:index'%}" class="text-secondary text-decoration-none" >Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:addProduct'%}" class="text-secondary text-decoration-none" >Add Product</a></li>
+  </ol>
+</nav>
   <hr>
 
   <thead class='thead-dark'>

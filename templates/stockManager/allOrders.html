@@ -2,11 +2,8 @@
 
 {%if messages %} 
 {%for message in messages %}
-<div class="mt-5 alert alert-success alert-dismissible fade show" role="alert">
+<div class="mt-5 alert alert-success alert-dismissible fw-bold text-center fade show" role="alert">
   {{message}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="close">
-    x
-  </button>
 </div>
 
 {% endfor %} 
@@ -16,14 +13,26 @@
   <h5 class="form-header w-100 text-start text-decoration-underline mt-2">
        ORDER RECORDS
   </h5>
+  <nav aria-label="breadcrumb ">
+    <ol class="breadcrumb mt-0 mb-5">
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'home:index'%}" class="text-secondary text-decoration-none" >Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:addOrder'%}" class="text-secondary text-decoration-none" >Add Order</a></li>
+    </ol>
+  </nav>
   <hr>
+
   <thead class="thead-dark" >
     <th scope="col"></th>
     <th scope="col">Customer Name</th>
     <th scope="col">Product Name</th>
-    <th scope="col">Quantity</th>
-    <th scope="col">Status</th>
-    <th scope="col">Action</th>
+    <th scope="col">Quantity(L)</th>
+    <th scope="col">Selling Price</th>
+    <th scope="col">Sold At</th>
+    <th scope="col">Amount Paid</th>
+    <th scope="col">Packaging</th>
+    <th scope="col">Delivery Status</th>
+    <th scope="co1 ">Order Status</th>
+    <th scope="co1 ">Action</th>
   </thead>
   <tbody>
     {% if orders%}
@@ -32,20 +41,25 @@
       <th scope="row">{{order.id}}</th>
       <td>{{order.customer}}</td>
       <td>{{order.product}}</td>
-      <td>{{order.quantity}}</td>
-      <td>{{order.status}}</td>
+      <td>{{order.quantity_in_litres}}</td>
+      <td>{{order.selling_price}}</td>
+      <td>{{order.sold_at}}</td>
+      <td>{{order.amount_paid}}</td>
+      <td>{{order.packaging}}</td>
+      <td>{{order.delivery}}</td>
+      <td>{{order.order_status}}</td>
       <td>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-end ">
           <a
             href="{% url 'stockManager:updateOrder' order.id %}"
             type="button"
-            class="btn btn-outline-secondary "
+            class="btn btn-outline-secondary ms-2 "
             >Update
           </a>
           <a
             href="{% url 'stockManager:deleteOrder' order.id %}"
             type="button"
-            class="btn btn-outline-danger "
+            class="btn btn-outline-danger ms-2 "
             >Delete</a
           >
         </div>

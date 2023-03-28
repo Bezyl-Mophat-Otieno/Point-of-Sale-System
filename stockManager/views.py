@@ -124,18 +124,18 @@ def addOrdersForm (request):
 @login_required(login_url='/')
 def allOrders(request):
     orders = Order.objects.all()
-    return render(request,'stockManager/allOrders.html',{'orders':orders})
+    return render(request,'stockManager/allOrders.html',{ 'orders':orders })
 
 
 @login_required(login_url='/')
 def pendingOrders(request):
-    orders = Order.objects.filter(status='pending')
+    orders = Order.objects.filter(order_status='pending')
     return render(request,'stockManager/allOrders.html',{'orders':orders})
 
 
 @login_required(login_url='/')
 def fulfilledOrders(request):
-    orders = Order.objects.filter(status='fulfilled')
+    orders = Order.objects.filter(order_status='fulfilled')
     return render(request,'stockManager/allOrders.html',{'orders':orders})
 
 
@@ -182,7 +182,7 @@ def addSalesForm (request):
 
 @login_required(login_url='/')
 def allSales(request):
-    sales = Sale.objects.all()
+    sales = Order.objects.filter (amount_paid__gt=0 )
     return render(request,'stockManager/allSales.html',{'sales':sales})
 
 
@@ -199,7 +199,6 @@ def loginPage (request):
             messages.success(request,'Log-In Successful')
             return redirect('/home/dashboard')
         else:
-            print('hello')
             messages.info(request,'Username or Password is incorrect')
         
     context = {}    
@@ -212,7 +211,7 @@ def logoutUser (request):
     messages.success(request,'Log-Out Successful')
     return redirect('/')
 
-
+@login_required(login_url='/')
 def register (request):
     form = userRegisterForm()
     if request.method == 'POST':
@@ -221,8 +220,9 @@ def register (request):
             form.save()
             user = form.cleaned_data.get('username')
             messages.success(request,'Account Created Successfully For ' + user )
-            return redirect('/stock/login')
-
+            return redirect('/')
+        else:
+            print(form.errors)
     return render(request,'stockManager/register.html' , {'form':form})
 # def updateSales(request,saleId):
 #     sale = Order.objects.get( pk=saleId)

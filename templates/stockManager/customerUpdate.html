@@ -5,6 +5,12 @@
 {%else%}
 <form class="mt-5" action="" method="POST">
   <h5 class="form-header  w-bold text-center">CUSTOMER INFORMATION UPDATE</h5>
+  <nav aria-label="breadcrumb ">
+    <ol class="breadcrumb mt-0 mb-5">
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'home:index'%}" class="text-secondary text-decoration-none" >Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:allCustomers'%}" class="text-secondary text-decoration-none" >Our Customers</a></li>
+    </ol>
+  </nav>
   <hr>
   {% csrf_token %}
   <div class="form-group">

@@ -40,14 +40,19 @@ class CustomerAddForm(ModelForm):
 class OrderAddForm(ModelForm):
     class Meta:
         model = Order
-        fields =['customer','product','quantity','status',]
+        fields =['customer','product','quantity_in_litres','selling_price','sold_at','amount_paid','packaging','delivery','order_status',]
 
 
         widgets = {
             'customer':forms.Select(attrs={'class':'form-control'}),
             'product':forms.Select(attrs={'class':'form-control'}),
-            'quantity':forms.NumberInput(attrs={'class':'form-control'}),
-            'status':forms.Select(attrs={'class':'form-control'}),
+            'quantity_in_litres':forms.NumberInput(attrs={'class':'form-control'}),
+            'selling_price':forms.NumberInput(attrs={'class':'form-control'}),
+            'sold_at':forms.NumberInput(attrs={'class':'form-control'}),
+            'amount_paid':forms.NumberInput(attrs={'class':'form-control'}),
+            'packaging':forms.Select(attrs={'class':'form-control'}),
+            'delivery':forms.Select(attrs={'class':'form-control'}),
+            'order_status':forms.Select(attrs={'class':'form-control'}),
         }
 
 

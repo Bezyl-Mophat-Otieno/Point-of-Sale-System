@@ -56,9 +56,9 @@ class Order(models.Model):
         return self.product.name
     
     
-    @property
-    def credits (self):
-        return self.sold_at - self.amount_paid
+    # @property
+    # def credits (self):
+    #     return self.sold_at - self.amount_paid
     
     def save(self,*args, **kwargs):
         self.balance = self.sold_at - self.amount_paid

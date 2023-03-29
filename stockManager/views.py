@@ -183,6 +183,7 @@ def addSalesForm (request):
 @login_required(login_url='/')
 def allSales(request):
     sales = Order.objects.filter (amount_paid__gt=0 )
+    
     return render(request,'stockManager/allSales.html',{'sales':sales})
 
 

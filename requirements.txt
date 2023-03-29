@@ -3,7 +3,6 @@ asgiref==3.6.0
 backports.zoneinfo==0.2.1
 bcrypt==3.1.7
 blinker==1.4
-Brlapi==0.7.0
 certifi==2019.11.28
 chardet==3.0.4
 charset-normalizer==3.1.0

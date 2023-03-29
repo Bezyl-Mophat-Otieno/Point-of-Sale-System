@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn configurations.wsgi
+web: python manage.py migrate && gunicorn BubbleBurst-admin.wsgi

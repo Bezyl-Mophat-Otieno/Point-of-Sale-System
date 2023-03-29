@@ -188,6 +188,15 @@ def allSales(request):
 
 
 
+@login_required(login_url='/')
+def outstandingInvoices(request):
+    #getting the list of sales where customers still have a balance due.
+    sales = Order.objects.filter (balance__gt=0 )
+    
+    return render(request,'stockManager/allSales.html',{'sales':sales})
+
+
+
 
 #contains logic for authentication
 def loginPage (request):

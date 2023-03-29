@@ -49,6 +49,7 @@ class Order(models.Model):
     delivery = models.CharField(max_length=100,null=True , choices=DELIVERY)
     order_status = models.CharField(max_length=100,null=True , choices=STATUS)
     packaging = models.CharField(max_length=100,null=True , choices=PACKAGING)
+    balance = models.DecimalField(max_digits=6, decimal_places=2)
     
     
     def __str__(self):
@@ -58,6 +59,10 @@ class Order(models.Model):
     @property
     def credits (self):
         return self.sold_at - self.amount_paid
+    
+    def save(self,*args, **kwargs):
+        self.balance = self.sold_at - self.amount_paid
+        super(Order, self).save(*args, **kwargs)
     
 
     

@@ -22,6 +22,7 @@ def index(request):
     # Calculatiing the revenue accrued by the sales 
     sales = Order.objects.filter (amount_paid__gt=0 )
     revenue = sales.aggregate(total=Sum(F('amount_paid')))['total']
+    accountsRecievable = sales.aggregate(total=Sum(F('balance')))['total']
     #Counting the total number of sales made 
     salesCount = sales.count();
     # render top sales in the home page 
@@ -29,7 +30,7 @@ def index(request):
     #render the list of products that we currently have in stock 
     products = Product.objects.all().count()
 
-    context = { 'pending':pendingOrders , 'fulfilled':fullFilledOrdersCount, 'salesCount':salesCount , 'products':products , 'customers':customers , 'revenue':revenue , 'topSales':topSales , 'products':products , 'sales':sales }
+    context = { 'pending':pendingOrders , 'fulfilled':fullFilledOrdersCount, 'salesCount':salesCount , 'products':products , 'customers':customers , 'revenue':revenue , 'topSales':topSales , 'products':products , 'sales':sales , 'accountsRecievable':accountsRecievable }
     return render(request, 'home/home.html',context)
 
 def aboutPage(request):

@@ -30,6 +30,7 @@ path('fulfilledOrders/',views.fulfilledOrders,name='fulfilledOrders'),
     #sale patterrns
 path('addSale/',views.addSalesForm,name='addSale'),
 path('allSales/',views.allSales,name='allSales'),
+path('outstandingInvoices/',views.outstandingInvoices,name='outstandingInvoices'),
 # path('updateOrder/<int:orderId>',views.updateOrders,name='updateOrder'),
 # path('deleteOrder/<int:orderId>',views.deleteOrder,name='deleteOrder'),
 

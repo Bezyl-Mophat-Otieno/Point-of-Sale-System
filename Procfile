@@ -1,1 +1,1 @@
-web: gunicorn configurations.wsgi --error-logfile
+web: gunicorn configurations.wsgi 

@@ -1,0 +1,17 @@
+{% extends 'base.html' %} 
+{% block content %}
+<form class="mt-5" action="" method="POST">
+  <h5 class="form-header text-decoration-underline  w-bold text-start">RECORD EXPENSE</h5>
+  <nav aria-label="breadcrumb ">
+    <ol class="breadcrumb mt-0 mb-5">
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'home:index'%}" class="text-secondary text-decoration-none" >Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:allExpenses'%}" class="text-secondary text-decoration-none" >Expenses</a></li>
+    </ol>
+  </nav>
+  <hr>
+  {% csrf_token %}
+  <div class="form-group">
+   {{form}}
+  <button type="submit" class="btn btn-primary mt-3">Add Expense</button>
+</form>
+{% endblock %}

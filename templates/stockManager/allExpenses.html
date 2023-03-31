@@ -14,45 +14,44 @@
 <br />
 <table class="table table-striped table-bordered">
   <h5 class="form-header  w-100 text-start text-decoration-underline mt-2">
-       CUSTOMER RECORDS
+       EXPENSE LIST
   </h5>
   <nav aria-label="breadcrumb ">
     <ol class="breadcrumb mt-0 mb-5">
       <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'home:index'%}" class="text-secondary text-decoration-none" >Home</a></li>
       <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:addCustomer'%}" class="text-secondary text-decoration-none" >Add Customer</a></li>
-      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:addOrder'%}" class="text-secondary text-decoration-none" >Make Order</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:addExpense'%}" class="text-secondary text-decoration-none" > Record Expense </a></li>
     </ol>
   </nav>
   <hr>
   <thead class="thead-dark" >
     <th scope="col"></th>
-    <th scope="col">Customer Name</th>
-    <th scope="col">Phone Number</th>
-    <th scope="col">Location</th>
-    <th scope="col">Action</th>
+    <th scope="col">Date Spent</th>
+    <th scope="col">Expense  Tittle</th>
+    <th scope="col">Amount</th>
   </thead>
   <tbody>
-    {% for customer in customers %}
+    {% for expense in expenses %}
     <tr>
       <th scope="row">{{customer.id}}</th>
-      <td>{{customer.name}}</td>
-      <td>{{customer.phone}}</td>
-      <td>{{customer.location}}</td>
+      <td>{{expense.date}}</td>
+      <td>{{expense.expense_tittle}}</td>
+      <td>{{expense.amount_spent}}</td>
       <td>
         <div class="d-flex justify-content-between">
-          <a
-            href="{% url 'stockManager:updateCustomer' customer.id %}"
+          {% comment %} <a
+            href="{% url 'stockManager:updateExpense' expense.Id %}"
             type="button"
             class="btn btn-outline-secondary "
             >Update
-          </a>
-          <a
-            href="{% url 'stockManager:deleteCustomer' customer.id %}"
+          </a> {% endcomment %}
+          {% comment %} <a
+            href="{% url 'stockManager:deleteExpense' expense.Id %}"
             type="button"
             class="btn btn-outline-danger "
             >Delete</a
           >
-        </div>
+        </div> {% endcomment %}
       </td>
     </tr>
     {% endfor %}

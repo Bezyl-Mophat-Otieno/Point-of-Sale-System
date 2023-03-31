@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from .forms import ProductAddForm,CustomerAddForm,OrderAddForm,SaleAddForm,userRegisterForm
+from .forms import ProductAddForm,CustomerAddForm,OrderAddForm,SaleAddForm,userRegisterForm,ExpenseAddForm
 from django.http import HttpResponseRedirect
-from .models import Product,Customer,Order,Sale
+from .models import Product,Customer,Order,Expense
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
@@ -81,14 +81,13 @@ def allCustomers(request):
     return render(request,'stockManager/allCustomers.html',{'customers':customers})
 
 
-
 @login_required(login_url='/')
-def updateCustomers(request,customerId):
+def updateCustomer(request,customerId):
     customer = Customer.objects.get( pk=customerId)
     form = CustomerAddForm(request.POST or None,instance=customer)
     if form.is_valid():
         form.save()
-        messages.success(request,'Customer Details Updated Successfully')
+        messages.success(request,'Customer Details  Updated Successfully')
         return redirect('/stock/allCustomers')
 
     return render(request , 'stockManager/customerUpdate.html',{'customer':customer,'form':form})
@@ -97,6 +96,56 @@ def deleteCustomer (request , customerId):
     customer = Customer.objects.get(pk=customerId)
     customer.delete()
     return redirect ('/stock/allCustomers')
+    
+
+
+
+# Controller logics for expenses 
+
+@login_required(login_url='/')
+def expenseAddForm (request):
+    if request.method == 'POST':
+        submitted = False
+        form =ExpenseAddForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Expense Recorded Successfully')
+            return HttpResponseRedirect('/stock/allExpenses?submitted=True')
+        
+        
+
+    else:
+        form=ExpenseAddForm()
+        submitted=False
+        if 'submitted' in request.GET:
+            submitted=True
+    return render(request,'stockManager/addExpense.html',{'form':form,'submitted':submitted})
+
+
+
+@login_required(login_url='/')
+def allExpenses(request):
+    expenses = Expense.objects.all()
+    return render(request,'stockManager/allExpenses.html',{'expenses':expenses})
+
+
+
+
+@login_required(login_url='/')
+def updateExpense(request,expenseId):
+    expense = Expense.objects.get( pk=expenseId)
+    form = ExpenseAddForm(request.POST or None,instance=expense)
+    if form.is_valid():
+        form.save()
+        messages.success(request,'Expenses Updated Successfully')
+        return redirect('/stock/allExpenses')
+
+    return render(request , 'stockManager/expenseUpdate.html',{'expense':expense,'form':form})
+
+def deleteExpense (request , expenseId):
+    expense = Expense.objects.get(pk=expenseId)
+    expense.delete()
+    return redirect ('/stock/allExpenses')
     
 
 
@@ -182,7 +231,7 @@ def addSalesForm (request):
 
 @login_required(login_url='/')
 def allSales(request):
-    sales = Order.objects.filter (amount_paid__gt=0 )
+    sales = Order.objects.filter (sold_at__gt=0 )
     
     return render(request,'stockManager/allSales.html',{'sales':sales})
 

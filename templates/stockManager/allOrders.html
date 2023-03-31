@@ -17,12 +17,14 @@
     <ol class="breadcrumb mt-0 mb-5">
       <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'home:index'%}" class="text-secondary text-decoration-none" >Home</a></li>
       <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:addOrder'%}" class="text-secondary text-decoration-none" >Add Order</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'stockManager:allSales'%}" class="text-secondary text-decoration-none" >View Sales</a></li>
     </ol>
   </nav>
   <hr>
 
   <thead class="thead-dark" >
     <th scope="col"></th>
+    <th scope="col">Date Ordered</th>
     <th scope="col">Customer Name</th>
     <th scope="col">Product Name</th>
     <th scope="col">Quantity(L)</th>
@@ -39,6 +41,7 @@
     {% for order in orders %}
     <tr>
       <th scope="row">{{order.id}}</th>
+      <td>{{order.date_created}}</td>
       <td>{{order.customer}}</td>
       <td>{{order.product}}</td>
       <td>{{order.quantity_in_litres}}</td>

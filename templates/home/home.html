@@ -455,8 +455,6 @@
           </ul>
         </li>
 
-
-        
         <li class="nav-item">
           <a
             class="nav-link collapsed"
@@ -464,7 +462,7 @@
             data-bs-toggle="collapse"
             href="#"
           >
-            <i class="bi bi-receipt"></i><span>Sales</span
+            <i class="bi bi-archive-fill"></i><span>Expenses</span
             ><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul
@@ -473,17 +471,18 @@
             data-bs-parent="#sidebar-nav"
           >
             <li>
-              <a href="{% url 'stockManager:addSale' %}">
-                <i class="bi bi-circle"></i><span>Add Sale</span>
+              <a href="{% url 'stockManager:addExpense' %}">
+                <i class="bi bi-circle"></i><span>Record Expense</span>
               </a>
             </li>
             <li>
-              <a href="{% url 'stockManager:allSales' %}">
-                <i class="bi bi-circle"></i><span>View Sales</span>
+              <a href="{% url 'stockManager:allExpenses' %}">
+                <i class="bi bi-circle"></i><span>View Expenses</span>
               </a>
             </li>
           </ul>
         </li>
+
 
 
         
@@ -874,6 +873,54 @@
               </div>
               <!-- End Revenue Card -->
 
+                            <!-- EXpesnses Card -->
+                            <div class="col-xxl-4 col-md-6">
+                              <div class="card info-card revenue-card">
+                                <div class="filter">
+                                  <a class="icon" href="#" data-bs-toggle="dropdown"
+                                    ><i class="bi bi-three-dots"></i
+                                  ></a>
+                                  <ul
+                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
+                                  >
+                                    <li class="dropdown-header text-start">
+                                      <h6>Filter</h6>
+                                    </li>
+              
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                  </ul>
+                                </div>
+              
+                                <a href="{% url 'stockManager:allExpenses' %}" class="card-body">
+                                  <h5 class="card-title">
+                                    Expenses <span>| This Month</span>
+                                  </h5>
+              
+                                  <div class="d-flex align-items-center">
+                                    <div
+                                      class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                                    >
+                                      <i class="bi bi-currency-dollar text-secondary"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                      <h6>Ksh.
+                                        {%if totalExpenses == None %}
+                                        0
+                                        {% else %}
+                                        {{totalExpenses}}
+                                        {% endif %}                        
+                                      </h6>
+                                      <span class="text-success small pt-1 fw-bold">8%</span>
+                                      <span class="text-muted small pt-2 ps-1">increase</span>
+                                    </div>
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                            <!-- End Revenue Card -->
+
               
               <!-- Outstanding Invoice Card -->
               <div class="col-xxl-4 col-md-6">
@@ -908,11 +955,7 @@
                       </div>
                       <div class="ps-3">
                         <h6>Ksh.
-                          {%if accountsRecievable == None %}
-                          0
-                          {% else %}
                           {{accountsRecievable}}
-                          {% endif %}                        
                         </h6>
                         <span class="text-success small pt-1 fw-bold">8%</span>
                         <span class="text-muted small pt-2 ps-1">increase</span>

@@ -16,8 +16,14 @@ path('deleteProduct/<int:productId>',views.deleteProduct,name='deleteProduct'),
     #Customer Patters 
 path('addCustomer/',views.addCustomerForm,name='addCustomer'),
 path('allCustomers/',views.allCustomers,name='allCustomers'),
-path('updateCustomer/<int:customerId>',views.updateCustomers,name='updateCustomer'),
+path('updateCustomer/<int:customerId>',views.updateCustomer,name='updateCustomer'),
 path('deleteCustomer/<int:customerId>',views.deleteCustomer,name='deleteCustomer'),
+
+path('addExpense/',views.expenseAddForm,name='addExpense'),
+path('allExpenses/',views.allExpenses,name='allExpenses'),
+path('updateExpense/<int:expenseId>',views.updateExpense,name='updateExpense'),
+path('deleteExpense/<int:expenseId>',views.deleteCustomer,name='deleteExpense'),
+
     #Order patterns 
 path('addOrder/',views.addOrdersForm,name='addOrder'),
 path('allOrders/',views.allOrders,name='allOrders'),

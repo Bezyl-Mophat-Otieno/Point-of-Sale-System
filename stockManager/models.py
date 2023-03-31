@@ -37,19 +37,20 @@ class Customer (models.Model):
 class Order(models.Model):
     
     DELIVERY = (('delivered','delivered'),('delivery pending','delivery pending'))
-    PACKAGING = (('500ml bottles','500ml bottles'),('1L bottles','1L bottles'))
+    PACKAGING = (('500ml bottles','500ml bottles'),('1L bottles','1L bottles'),('5L jerry cans','5L jerry cans'),('10L jerry cans','10L jerry cans'),('20L jerry cans','20L jerry cans'),)
     STATUS = (('pending','pending'),('fulfilled','fulfilled'),)
     SP = (('1L @70','1L @70'),('1L @130','1L@ 130'),('500ml @40','500ml @40'), ('500ml @70','500ml@ 70'),)
     customer = models.ForeignKey(Customer,null=True,blank=True, on_delete=models.CASCADE)
     product = models.ForeignKey(Product,null=True , blank=True , on_delete=models.CASCADE)
-    quantity_in_litres = models.DecimalField(max_digits=6, decimal_places=2,blank=False,null=False)
+    quantity_in_litres = models.DecimalField(max_digits=6, decimal_places=2,blank=True,null=True)
     selling_price  = models.DecimalField(max_digits=6, decimal_places=2,blank=False,null=False)
     sold_at  = models.DecimalField(max_digits=6, decimal_places=2,blank=False,null=False)
     amount_paid  = models.DecimalField(max_digits=6, decimal_places=2,blank=False,null=False)
     delivery = models.CharField(max_length=100,null=True , choices=DELIVERY)
     order_status = models.CharField(max_length=100,null=True , choices=STATUS)
-    packaging = models.CharField(max_length=100,null=True , choices=PACKAGING)
+    packaging = models.CharField(max_length=100,null=True ,blank=True, choices=PACKAGING)
     balance = models.DecimalField(max_digits=6, decimal_places=2)
+    date_created  = models.DateTimeField(auto_now_add=True , null=True, blank=True)
     
     
     def __str__(self):
@@ -80,4 +81,13 @@ class Sale(models.Model):
     def __str__(self):
         return self.product.name
 
+class Expense (models.Model):
+    date = models.DateTimeField(auto_now_add=True , null=True)
+    expense_tittle = models.CharField(max_length=100 ,blank=True,null=True)
+    amount_spent  = models.DecimalField(max_digits=6, decimal_places=2,blank=False,null=False)
+    def __str__(self):
+        return self.expense_tittle or ''
     
+
+    
+

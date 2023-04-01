@@ -22,7 +22,7 @@ path('deleteCustomer/<int:customerId>',views.deleteCustomer,name='deleteCustomer
 path('addExpense/',views.expenseAddForm,name='addExpense'),
 path('allExpenses/',views.allExpenses,name='allExpenses'),
 path('updateExpense/<int:expenseId>',views.updateExpense,name='updateExpense'),
-path('deleteExpense/<int:expenseId>',views.deleteCustomer,name='deleteExpense'),
+path('deleteExpense/<int:expenseId>',views.deleteExpense,name='deleteExpense'),
 
     #Order patterns 
 path('addOrder/',views.addOrdersForm,name='addOrder'),

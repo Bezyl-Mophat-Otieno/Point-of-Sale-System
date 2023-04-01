@@ -249,19 +249,22 @@ def outstandingInvoices(request):
 
 #contains logic for authentication
 def loginPage (request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request,username=username,password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request,'Log-In Successful')
-            return redirect('/home/dashboard')
-        else:
-            messages.info(request,'Username or Password is incorrect')
-        
-    context = {}    
-    return render(request,'stockManager/login.html' , context)
+    if request.user.is_authenticated:
+       return redirect('home/dashboard')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request,username=username,password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,'Log-In Successful')
+                return redirect('/home/dashboard')
+            else:
+                messages.info(request,'Username or Password is incorrect')
+            
+        context = {}    
+        return render(request,'stockManager/login.html' , context)
 
 
 #logout logic
@@ -272,29 +275,18 @@ def logoutUser (request):
 
 @login_required(login_url='/')
 def register (request):
-    form = userRegisterForm()
-    if request.method == 'POST':
-        form = userRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('username')
-            messages.success(request,'Account Created Successfully For ' + user )
-            return redirect('/')
-        else:
-            print(form.errors)
-    return render(request,'stockManager/register.html' , {'form':form})
-# def updateSales(request,saleId):
-#     sale = Order.objects.get( pk=saleId)
-#     form = SalesAddForm(request.POST or None,instance=sale)
-#     if form.is_valid():
-#         form.save()
-#         messages.success(request,'Sales Information Updated Successfully')
-#         return redirect('/stock/allSales')
-
-#     return render(request , 'stockManager/saleUpdate.html',{'sale':sale,'form':form})
-
-# def deleteOrder (request , orderId):
-#     order = Order.objects.get(pk=orderId)
-#     order.delete()
-#     return redirect ('/stock/allSales')
+    if request.user.is_authenticated:
+       return redirect('home/dashboard')
+    else:
+        form = userRegisterForm()
+        if request.method == 'POST':
+            form = userRegisterForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request,'Account Created Successfully For ' + user )
+                return redirect('/')
+            else:
+                print(form.errors)
+        return render(request,'stockManager/register.html' , {'form':form})
 
